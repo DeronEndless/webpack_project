@@ -14,6 +14,13 @@ module.exports = {
       include: path.join(__dirname, '../src')
     }]
   },
+  resolve: {
+    alias: {
+      '@': path.join(__dirname, '../src'),
+      actions: path.join(__dirname, '../src/redux/actions'),
+      reducers: path.join(__dirname, '../src/redux/reducers')
+    }
+  },
   devServer: {
     contentBase: path.join(__dirname, '../dist'),
     compress: true,
