@@ -1,9 +1,11 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
+  devtool: 'none',
   entry: {
     app: [
       "@babel/polyfill",
@@ -12,9 +14,15 @@ module.exports = {
     vendor: ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux']
   },
   output: {
+    publicPath : '/',
     path: path.join(__dirname, '../dist'),
     filename: '[name].[hash].js',
     chunkFilename: '[name].[chunkhash].js'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   module: {
     rules: [
@@ -26,7 +34,6 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          {loader: MiniCssExtractPlugin.loader},
           {loader: 'css-loader', options: {modules: true, localIdentName: '[path][name]__[local]--[hash:base64:5]'}},
           'postcss-loader',
         ],
@@ -55,15 +62,7 @@ module.exports = {
       filename: 'index.html',
       template: path.join(__dirname, '../public/index.html')
     }),
-    new MiniCssExtractPlugin({ // 压缩css
-        filename: "[name].[contenthash].css",
-        chunkFilename: "[id].[contenthash].css"
-    })
-  ],
-  devServer: {
-    compress: true,
-    host: '0.0.0.0',
-    hot: true,
-    port: 8081
-  }
+    new OptimizeCssAssetsPlugin(),
+    new CleanWebpackPlugin()
+  ]
 }
