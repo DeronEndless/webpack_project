@@ -3,11 +3,14 @@ var path = require('path');
 var app = express();
 
 app.get('/dist*', function (req, res) {
+  console.log('111111')
+  console.log('req.url', req.url)
   res.sendFile(path.join(__dirname , "../" + req.url));
 })
 
 app.use(function (req, res) {
-	res.sendFile(path.join( __dirname , "../dist/" + "index.html" ));
+  console.log('22222')
+	res.sendFile(path.join( __dirname , "../dist/index.html"));
 })
 
 var server = app.listen(8081, function () {

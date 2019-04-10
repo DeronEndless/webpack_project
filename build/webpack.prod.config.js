@@ -14,7 +14,7 @@ module.exports = {
     vendor: ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux']
   },
   output: {
-    publicPath : '/',
+    publicPath : '/dist/',
     path: path.join(__dirname, '../dist'),
     filename: '[name].[hash].js',
     chunkFilename: '[name].[chunkhash].js'
@@ -34,6 +34,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          'style-loader',
           {loader: 'css-loader', options: {modules: true, localIdentName: '[path][name]__[local]--[hash:base64:5]'}},
           'postcss-loader',
         ],
